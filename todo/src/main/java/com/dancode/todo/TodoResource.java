@@ -2,10 +2,7 @@ package com.dancode.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +24,18 @@ public class TodoResource {
     public ResponseEntity<Void> deleteTodoById(@PathVariable String username, @PathVariable Integer id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(path = "/users/{username}/todos/{id}")
+    public Todo updateTodoById(@PathVariable String username, @PathVariable Integer id, @RequestBody Todo todo){
+        repository.save(todo);
+        return todo;
+    }
+
+    @PostMapping(path = "/users/{username}/todos")
+    public Todo createTodo(@PathVariable String username, @RequestBody Todo todo){
+        todo.setUsername(username);
+        todo.setId(null);
+        return repository.save(todo);
     }
 }
