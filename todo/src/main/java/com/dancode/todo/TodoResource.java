@@ -35,7 +35,7 @@ public class TodoResource {
     @PostMapping(path = "/users/{username}/todos")
     public Todo createTodo(@PathVariable String username, @RequestBody Todo todo){
         todo.setUsername(username);
-        todo.setId(6);
+        todo.setId(null);
         return repository.save(todo);
     }
 }

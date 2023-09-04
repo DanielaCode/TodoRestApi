@@ -1,5 +1,6 @@
 package com.dancode.todo;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -19,12 +20,11 @@ public class BasicAuthenticationSecurityConfiguration {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		//1: Response to preflight request doesn't pass access control check
 		//2: basic auth
-		return 
-				http
-					.authorizeHttpRequests( auth -> auth.anyRequest().authenticated())
-					.httpBasic(Customizer.withDefaults())
-					.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .csrf(csrf->csrf.disable())
-                    .build();
+		http
+				.authorizeHttpRequests( auth -> auth.anyRequest().authenticated().requestMatchers(PathRequest.toH2Console()).permitAll())
+				.httpBasic(Customizer.withDefaults())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.csrf(csrf->csrf.disable());
+		return http.build();
 	}
 }

@@ -3,11 +3,13 @@ package com.dancode.todo;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
 public class Todo {
     @Id
+    @GeneratedValue
     private Integer id;
     private String username;
     private String description;
