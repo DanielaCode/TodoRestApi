@@ -12,6 +12,10 @@ public class TodoResource {
     @Autowired
     private TodoRepository repository;
 
+    @GetMapping(path = "/basicauth")
+    public String basicAuth(){
+        return "success";
+    }
     @GetMapping(path = "/users/{username}/todos")
     public List<Todo> getTodosByUser(@PathVariable String username){
         return repository.findByUsername(username);
